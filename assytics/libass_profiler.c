@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     while(my_ass_images != NULL){
       int image_size = my_ass_images->stride*(my_ass_images->h-1)*my_ass_images->w;
       frame_total_image_size += image_size;
-      frame_largest_image_size = frame_total_image_size > image_size ? frame_total_image_size : image_size;
+      frame_largest_image_size = frame_largest_image_size > image_size ? frame_largest_image_size : image_size;
       frame_image_count++;
       my_ass_images = my_ass_images->next;
     }
