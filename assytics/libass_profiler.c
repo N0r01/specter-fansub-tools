@@ -52,9 +52,9 @@ int main(int argc, char *argv[]) {
   fprintf(outfile, "%s\n", inputfilename);
   fprintf(outfile, "time,total_image_size,largest_image_size,image_count,time_benchmark\n");
   for (long long t = 0; t < track_duration; t = t + 1000/fps) {
-    int frame_total_image_size = 0;
-    int frame_largest_image_size = 0;
-    int frame_image_count = 0;
+    long long frame_total_image_size = 0;
+    long long frame_largest_image_size = 0;
+    long long frame_image_count = 0;
     clock_t begin = clock();
     ASS_Image* my_ass_images = ass_render_frame(my_ass_renderer,my_ass_track,t,NULL);
     double frame_time_benchmark = (double)(clock() - begin) / CLOCKS_PER_SEC;
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     //write to stats
     char timecode[40];
     timecode_string(timecode, t);
-    fprintf(outfile, "%s,%d,%d,%d,%lf\n", timecode,frame_total_image_size,frame_largest_image_size,frame_image_count,frame_time_benchmark);
+    fprintf(outfile, "%s,%lld,%lld,%lld,%lf\n", timecode,frame_total_image_size,frame_largest_image_size,frame_image_count,frame_time_benchmark);
   }
   fclose(outfile);
   return 0;
