@@ -27,5 +27,5 @@ This should generate a csv file called `output.csv`
 
 Run
 ```bash
-$ python graph_statistics_csv.py -i /path/to/your/subtitle_file.ass
+$ python graph_statistics_csv.py -i output.csv
 ```
