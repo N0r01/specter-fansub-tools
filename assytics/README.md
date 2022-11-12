@@ -25,7 +25,7 @@ $ ./libass_profiler /path/to/your/subtitle_file.ass
 ```
 This should generate a csv file called `output.csv`
 
-Run
+Run this to get a pretty looking graph similar to what you see above
 ```bash
 $ python graph_statistics_csv.py -i output.csv
 ```
