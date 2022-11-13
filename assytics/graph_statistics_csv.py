@@ -1,7 +1,7 @@
 import math,re,argparse,argcomplete,csv,sys
 from collections import namedtuple
 import matplotlib.pyplot as plt
-from matplotlib.ticker import MultipleLocator
+from matplotlib.ticker import MultipleLocator,FuncFormatter
 
 def sec_to_mm_ss_str(sec):
     rs = round(sec, 2)
@@ -34,6 +34,16 @@ frame_stat_y_axis_labels = [
     'seconds',
 ]
 
+def Base10BytesFormatter(max_y):
+    if max_y > 1000**3:
+        return lambda y,pos: f"{'{:.1f}'.format(y/1000**3)} GB"
+    elif max_y > 1000**2:
+        return lambda y,pos: f"{'{:.1f}'.format(y/1000**2)} MB"
+    elif max_y > 1000:
+        return lambda y,pos: f"{'{:.1f}'.format(y/1000)} kB"
+    else:
+        return lambda y,pos: f"{int(y)}"
+
 def graph_libass_stats(samples,title):
     zs = list(zip(*samples))
     time_domain = [str2s(t) for t in zs[0]]
@@ -43,25 +53,24 @@ def graph_libass_stats(samples,title):
     fig, subplots = plt.subplots(len(datasets), 1, constrained_layout=True)
     fig.suptitle(f'Analytics for {re.sub(".*/","",title)}')
 
-    print(len(subplots))
-    print(len(datasets))
-    print(len(frame_stat_y_axis_labels))
-    #subplot = subplots
     for subplot,dataset,graph_label,y_label in zip(subplots,datasets,frame_graph_labels,frame_stat_y_axis_labels):
         float_data = [float(a) for a in dataset]
+        max_y = max(float_data)
+        subplot.ticklabel_format(style='plain')
         subplot.xaxis.set_major_locator(MultipleLocator(60))
         subplot.xaxis.set_minor_locator(MultipleLocator(15))
+        subplot.xaxis.set_major_formatter(FuncFormatter(lambda x,pos: sec_to_mm_ss_str(x)))
         subplot.grid(visible=True, which='major', axis='x', color='#333333')
+        if y_label == "bytes":
+            subplot.yaxis.set_major_formatter(Base10BytesFormatter(max_y))
+        else:
+            subplot.set(xlabel=None, ylabel=y_label)
         subplot.set_xlim([time_domain[0], time_domain[-1]])
-        subplot.set_ylim([0, max(float_data)])
-        subplot.ticklabel_format(style='plain')
+        subplot.set_ylim([0, max_y])
         subplot.plot(time_domain,float_data)
-        #subplot.set_title(f'Analytics for {re.sub(".*/","",title)}')
         subplot.set_title(graph_label)
-        subplot.set(xlabel=None, ylabel=y_label)
-        subplot.set_xticklabels([sec_to_mm_ss_str(x) for x in subplot.get_xticks()])
+        plt.setp(subplot.get_xticklabels(), rotation=0, ha="left")
     plt.show()
-
 
 data_list = []
 with open(args.inputcsv, newline='') as csvfile:

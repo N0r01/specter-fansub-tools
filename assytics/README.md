@@ -8,7 +8,7 @@ This project seeks to profile the performance of your `.ass` subtitle file. This
 1. gcc compiler
 2. libass
 3. python3
-  * matplotlib
+    * matplotlib
 
 Do note that this code has only been tested on Arch Linux
 

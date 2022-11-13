@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# compiled binaries in this project
+libass_profiler
+
+# generated data in csv form
+output.csv

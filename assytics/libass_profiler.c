@@ -59,7 +59,10 @@ int main(int argc, char *argv[]) {
     ASS_Image* my_ass_images = ass_render_frame(my_ass_renderer,my_ass_track,t,NULL);
     double frame_time_benchmark = (double)(clock() - begin) / CLOCKS_PER_SEC;
     while(my_ass_images != NULL){
-      int image_size = my_ass_images->stride*(my_ass_images->h-1)*my_ass_images->w;
+      int h = my_ass_images->h;
+      int w = my_ass_images->w;
+      int stride = my_ass_images->stride;
+      long long image_size = stride*(h-1) + w;
       frame_total_image_size += image_size;
       frame_largest_image_size = frame_largest_image_size > image_size ? frame_largest_image_size : image_size;
       frame_image_count++;
