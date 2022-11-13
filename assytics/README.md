@@ -6,16 +6,14 @@ This project seeks to profile the performance of your `.ass` subtitle file. This
 
 ### prerequisites
 1. gcc compiler
-2. libass
+2. libass (library and headers)
 3. python3
-    * matplotlib
-
-Do note that this code has only been tested on Arch Linux
+    * matplotlib (pip package)
 
 ### compiling
-Run this to build libass_profiler
+On Arch Linux the command to build libass_profiler will look like this
 ```bash
-$ gcc libass_profiler.c -o libass_profiler -I/path/to/libass/ -lass
+$ gcc libass_profiler.c -o libass_profiler -lass
 ```
 
 ### usage

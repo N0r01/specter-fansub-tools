@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-#include <libass/ass.h>
+#include <ass/ass.h>
 
 char* defaultoutputfile = "output.csv";
 float fps = 23.976;
